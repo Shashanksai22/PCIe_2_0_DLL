@@ -21,13 +21,20 @@
 
 ## Architecture & Directory Structure
 
-The DUT (`pcie_dl_top`) implements a full-duplex **PCI Express 2.0 Data Link Layer** supporting 12-bit sequence numbering, incremental 32-bit LCRC generation/checking, 16-bit DLLP CRC, 8-slot Replay Buffer with ACK/NAK & timeout retransmission, and strict PHY TX arbitration (`Replay > DLLP > New TLP`).
+The DUT (`pcie_dl_top`) implements a full-duplex **PCI Express 2.0 Data Link Layer** supporting 12-bit sequence numbering, incremental 32-bit LCRC generation/checking, 16-bit DLLP CRC, 8-slot Replay Buffer with ACK/NAK & timeout retransmission, and strict PHY TX arbitration.
 
 ```text
 PCIe_2_0_DLL/
 ├── Makefile                    # Automated build, 18-test regression, and lcov/genhtml pipeline
-├── README.md                   # Project overview, architecture, and quickstart commands
-├── docs/                       # Setup & execution flow guide + 5-part verification decks
+├── README.md                   # Project overview, architecture, coverage metrics & quickstart
+├── docs/                       # Documentation, verification testplan, spec & presentation decks
+│   ├── UVM_Verilator_Setup_and_Flow_Guide.md 
+│   ├── PCIe_2.0_DLL_UVM_Verification_Testplan_v3.xlsx  # Excel sheet of test plan
+│   ├── pcie spec rev 2.0.pdf   #  Specification sheet of PCIE 2.0
+│   ├── PCIe 2.0 Data Link Layer RTL & Verification.pdf
+│   ├── PCIe_2_0_DLL_Verification_Part_3.pdf
+│   ├── PCIe_2_0_DLL_Verification_Part4_Simple.pptx
+│   └── PCIe 2.0 Data Link Layer Verification - Part 5.pdf
 ├── rtl/                        # Synthesizable SystemVerilog RTL (9 modules)
 │   ├── pcie_dl_top.sv          # Top-level Data Link Layer integration
 │   ├── pcie_dl_tx.sv           # TX framing, sequence prepending, and payload byte packing
@@ -37,7 +44,7 @@ PCIe_2_0_DLL/
 │   ├── pcie_dllp_ctrl.sv       # ACK/NAK DLLP framing and 16-bit CRC engine
 │   ├── pcie_replay_buffer.sv   # 8-slot packet storage for unacknowledged TLPs
 │   ├── pcie_replay_ctrl.sv     # ACK retirement, NAK pointer rewind, and replay timer
-│   └── pcie_phy_tx_arbiter.sv  # Priority arbiter (Replay > DLLP > TLP)
+│   └── pcie_phy_tx_arbiter.sv  # Priority arbiter (DLLP > Replay > New TLP)
 ├── tb/                         # Block-level directed SystemVerilog testbenches (9 TBs)
 └── uvm_tb/                     # Full-duplex IEEE 1800.2 UVM testbench
     ├── interfaces/             # pcie_dll_if.sv (clocking blocks + 8 concurrent SVAs)
