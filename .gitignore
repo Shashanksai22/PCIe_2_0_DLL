@@ -1,5 +1,19 @@
+# Build, simulation & waveform artifacts
+obj_dir/
+dump.vcd
+waveforms/
 *.vcd
 *.fst
+*.dat
+*.info
+
+# Logs & coverage HTML/data outputs
+logs/
+cov_logs/
+cov_report/
 *.log
-*.o
-obj_dir/
+
+# OS & editor files
+.DS_Store
+*.swp
+.vscode/
